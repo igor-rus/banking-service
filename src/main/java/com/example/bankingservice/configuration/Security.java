@@ -46,12 +46,10 @@ public class Security {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 //this is done on purpose to have access to h2-console and to make this app run on localhost
-                .headers(headers -> headers.frameOptions().disable())
                 .cors(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(customizer -> customizer
-                        .requestMatchers("/api/**").authenticated()
-                        .requestMatchers("/**").permitAll())
+                        .requestMatchers("/api/**").authenticated())
                         .sessionManagement(customizer -> customizer.sessionCreationPolicy(STATELESS))
                 .exceptionHandling(customizer -> customizer.authenticationEntryPoint(new HttpStatusEntryPoint(UNAUTHORIZED)))
                 .httpBasic(Customizer.withDefaults())
