@@ -4,7 +4,6 @@ import com.example.bankingservice.BaseIntegrationTest;
 import com.example.bankingservice.domain.LedgerRecord;
 import com.example.bankingservice.domain.OperationType;
 import com.example.bankingservice.domain.Transaction;
-import com.example.bankingservice.domain.TransactionType;
 import com.example.bankingservice.dto.AmountDTO;
 import com.example.bankingservice.repository.LedgerRecordRepository;
 import com.example.bankingservice.repository.TransactionHistoryRepository;

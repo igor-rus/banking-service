@@ -4,18 +4,14 @@ import com.example.bankingservice.BaseIntegrationTest;
 import com.example.bankingservice.domain.Account;
 import com.example.bankingservice.dto.AmountDTO;
 import com.example.bankingservice.dto.TransferDTO;
-import com.example.bankingservice.repository.AccountRepository;
 import com.example.bankingservice.repository.LedgerRecordRepository;
 import com.example.bankingservice.repository.TransactionHistoryRepository;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;

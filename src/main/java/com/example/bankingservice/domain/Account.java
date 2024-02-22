@@ -3,9 +3,6 @@ package com.example.bankingservice.domain;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.Currency;
-import java.util.concurrent.atomic.AtomicLong;
-
 @Entity
 @Data
 @Table(name = "accounts")
