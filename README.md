@@ -125,7 +125,7 @@ Both the users are configured with bcrypt password encoder in the Spring Securit
 ## Installation
 
 *Just clone the repo and run as a standard Spring Boot application.*
-  * git clone https://github.com/username/banking-api.git cd banking-api ```./gradlew bootRun```
+  * git clone https://github.com/igor-rus/banking-service.git cd banking-service ```./gradlew bootRun```
   * run test: ```./gradlew test```
 
 ## How to Use
