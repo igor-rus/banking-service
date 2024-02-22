@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <include file="/db/changelog/v1/2024_02_1__create_table_roles.sql"/>
+    <include file="/db/changelog/v1/2024_02_2__create_table_users.sql"/>
+    <include file="/db/changelog/v1/2024_02_3__create_table_users_roles.sql"/>
+    <include file="/db/changelog/v1/2024_02_4__create_table_accounts.sql"/>
+    <include file="/db/changelog/v1/2024_02_5__create_table_transactions.sql"/>
+    <include file="/db/changelog/v1/2024_02_6__create_table_ledger.sql"/>
+    <include file="/db/changelog/v1/2024_02_7__insert_dummy_data.sql"/>
+
+</databaseChangeLog>
