@@ -9,7 +9,6 @@
 - Depositing to an account
 - Withdrawal from an account
 - Money transfer between existing accounts
-- Fetching transaction history
 
 ## Technologies
 
