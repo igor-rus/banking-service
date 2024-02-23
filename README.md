@@ -22,6 +22,7 @@
 
 ## API Structure and Endpoints
 **Base URL: `http://localhost:8081`**
+**Swagger UI: `http://localhost:8081/swagger-ui.html`
 
 ## Authorization scheme
 The API uses Basic Authentication. All requests must include an `Authorization` header that contains `Basic ` followed by base 64 encoded form of `username:password`.
