@@ -2,6 +2,8 @@ package com.example.bankingservice.controller;
 
 import com.example.bankingservice.BaseIntegrationTest;
 import com.example.bankingservice.domain.Account;
+import com.example.bankingservice.domain.LedgerRecord;
+import com.example.bankingservice.domain.TransactionType;
 import com.example.bankingservice.dto.AmountDTO;
 import com.example.bankingservice.dto.TransferDTO;
 import com.example.bankingservice.repository.LedgerRecordRepository;
@@ -18,6 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.groups.Tuple.tuple;
 import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -31,7 +34,7 @@ public class TransferControllerIT extends BaseIntegrationTest {
 
     @Test
     @WithUserDetails("admin@email.com")
-    public void userCanTransferBetweenOwnAccountsRegularToSavings() throws Exception {
+    public void transferBetweenOwnAccountsRegularToSavingsWorks() throws Exception {
         AmountDTO amountDTO = new AmountDTO(new BigDecimal("70.00"));
         String requestBody = objectMapper.writeValueAsString(amountDTO);
 
@@ -56,11 +59,19 @@ public class TransferControllerIT extends BaseIntegrationTest {
         assertThat(byOwnerId).hasSize(2);
         assertThat(byOwnerId.get(0).getBalance()).isEqualTo(0L);
         assertThat(byOwnerId.get(1).getBalance()).isEqualTo(7000L);
+
+        //check correct ledger records are created
+        List<LedgerRecord> all = (List<LedgerRecord>) ledgerRecordRepository.findAll();
+        assertThat(all).hasSize(3);
+        assertThat(all).extracting("transactionType", "accountNumber", "amount")
+                .contains(tuple(TransactionType.Cr, "GB33BUKB20201555555555", 7000L),
+                        tuple(TransactionType.Db, "GB33BUKB20201555555555", 7000L),
+                        tuple(TransactionType.Cr, "GB33BUKB20201555555556", 7000L));
     }
 
     @Test
     @WithUserDetails("admin@email.com")
-    public void userCanTransferBetweenOwnAccountsSavingToRegular() throws Exception {
+    public void transferBetweenOwnAccountsSavingToRegularIsForbidden() throws Exception {
         AmountDTO amountDTO = new AmountDTO(new BigDecimal("50.00"));
         String requestBody = objectMapper.writeValueAsString(amountDTO);
 
