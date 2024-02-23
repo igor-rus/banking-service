@@ -26,9 +26,9 @@ public class ValidationService {
     private static final String OWN_ACCOUNT_WITHDRAWAL_MESSAGE = "You can only withdraw from your own accounts";
     private static final String OWN_ACCOUNT_TRANSFER_MESSAGE = "You can only transfer from your own accounts";
     private static final String SAVINGS_ACCOUNT_WITHDRAWAL_MESSAGE = "Savings account not allowed for withdrawal";
-    private static final String INSUFFICIENT_FUNDS_MESSAGE = "Insufficient funds for withdrawal";
-    private static final String INTERNAL_TRANSFER_OVER_LIMIT_MESSAGE = "Internal transfer exceeded limit";
-    private static final String EXTERNAL_TRANSFER_OVER_LIMIT_MESSAGE = "External transfer exceeded limit";
+    private static final String INSUFFICIENT_FUNDS_MESSAGE = "Insufficient funds";
+    private static final String INTERNAL_TRANSFER_OVER_LIMIT_MESSAGE = "Internal transfer exceeded %s limit";
+    private static final String EXTERNAL_TRANSFER_OVER_LIMIT_MESSAGE = "External transfer exceeded %s limit";
     private static final String SAVINGS_ACCOUNT_TRANSFER_MESSAGE = "You cannot make a transfer from a savings account";
 
     public ValidationResult validateDeposit(User caller, Account to) {
@@ -59,10 +59,15 @@ public class ValidationService {
         if (fromAccount.getAccountType() == AccountType.SAVINGS) {
             return createValidationResult(false, SAVINGS_ACCOUNT_TRANSFER_MESSAGE);
         }
+        if (MoneyUtil.convertEurosToCents(amount) > fromAccount.getBalance()) {
+            return createValidationResult(false, INSUFFICIENT_FUNDS_MESSAGE);
+        }
 
         boolean isInternalTransfer = isOwnerOfAccount(caller, toAccount);
         BigDecimal limit = isInternalTransfer ? internalTransferLimit : externalTransferLimit;
-        String message = isInternalTransfer ? INTERNAL_TRANSFER_OVER_LIMIT_MESSAGE : EXTERNAL_TRANSFER_OVER_LIMIT_MESSAGE;
+        String message = isInternalTransfer ?
+                String.format(INTERNAL_TRANSFER_OVER_LIMIT_MESSAGE, internalTransferLimit) :
+                String.format(EXTERNAL_TRANSFER_OVER_LIMIT_MESSAGE, externalTransferLimit);
 
         if (amount.compareTo(limit) > 0) {
             return createValidationResult(false, message);

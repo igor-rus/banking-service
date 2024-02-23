@@ -82,7 +82,7 @@ class ValidationServiceTest {
         // Incorrect - insufficient funds
         validationResult = validationService.validateWithdrawal(user, account, new BigDecimal("300.00"));
         assertThat(validationResult.isValid()).isFalse();
-        assertThat(validationResult.message()).isEqualTo("Insufficient funds for withdrawal");
+        assertThat(validationResult.message()).isEqualTo("Insufficient funds");
     }
 
     @Test
